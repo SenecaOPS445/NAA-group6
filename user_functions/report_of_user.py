@@ -32,14 +32,30 @@ def user_report():
     if not os.path.exists(report_location):
         print("The location you provided does not exist.")
         return
-    
+    # We need to create and write to text file in the file loaction
+    report_file = open(report_location + "/user_report.txt", "w")
+
     # This calls the function to get the list of regular users
     users = get_regular_users()
 
-    # need to user the list of users to get information about regualr users
-    # need to check if the user is sudoer or not
-    # need to check last login
-    # need to check disk usage
-    # need to check how the user connected to the system
+    # need to use the list of users to get information about regualr users
+    for user in users:
+        report_file.write(f"User: {user}\n")
+        report_file.write(f"Disk Usage: \n")
+        # need to check disk usage
+
+
+        report_file.write(f"Last Login: \n")            
+        # need to check last login
+
+        report_file.write(f"Permissions: \n")
+        # need to check if the user is sudoer or not
+
+        report_file.write(f"Connection Method: \n")
+        # need to check how the user connected to the system
+
+        report_file.write("\n")
     
+    report_file.close()
+    print("User report has been created successfully.")
     return
