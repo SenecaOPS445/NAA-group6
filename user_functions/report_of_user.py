@@ -32,6 +32,20 @@ def get_last_login(user):
     last_login_data = last_login_command.read()
     return last_login_data
 
+def is_sudoer(user):
+    """
+    This function will return True if the user is a sudoer, False otherwise.
+    """
+    # The sudoers file is located in /etc/sudoers
+    sudoers_file = open("/etc/sudoers", "r")
+    # Read the file
+    sudoers_data = sudoers_file.read()
+    # Check if the user is in the sudoers file
+    sudoers_file.close()
+    # may need to check user group as well if the user is in sudo group
+    if user in sudoers_data:
+        return "User is a sudoer."
+    return "User is not a sudoer."
 
 def user_report():
     """
@@ -54,16 +68,14 @@ def user_report():
     for user in users:
         report_file.write("-------------------------\n")
         report_file.write(f"User: {user}\n")
-        report_file.write(f"Disk Usage: \n")
         # need to check disk usage
-        
-
-        report_file.write(f"Last Login: \n")            
+        report_file.write(f"Disk Usage: \n")
         # need to check last login 
+        report_file.write(f"Last Login: \n")            
         report_file.write(get_last_login(user))
-        
-        report_file.write(f"Permissions: \n")
         # need to check if the user is sudoer or not
+        report_file.write(f"Permissions: \n")
+        report_file.write(is_sudoer(user))
         report_file.write("\n")
     
     report_file.close()
