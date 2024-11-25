@@ -94,5 +94,5 @@ def user_report():
         report_file.write("\n")
     
     report_file.close()
-    print("User report has been created successfully.")
+    print("User report has been created successfully. AT {report_location}/user_report.txt \n")
     return
