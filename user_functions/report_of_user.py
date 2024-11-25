@@ -21,6 +21,18 @@ def get_regular_users():
     
     return regular_users
 
+def get_last_login(user):
+    """
+    This function will return the detailed information about last login of given user.
+    """
+    # The os.popen will run the command and return the output as file object
+    # Do I use last or lastlog cmd? need to some research here
+    last_login_command = os.popen(f"last {user}")
+    # Since it is file object we need to read the file
+    last_login_data = last_login_command.read()
+    return last_login_data
+
+
 def user_report():
     """
     This function will create a user report as text file in the provided location for all users including the user's name, disk usage, when logged in and permissions. 
@@ -40,13 +52,15 @@ def user_report():
 
     # need to use the list of users to get information about regualr users
     for user in users:
+        report_file.write("-------------------------\n")
         report_file.write(f"User: {user}\n")
         report_file.write(f"Disk Usage: \n")
         # need to check disk usage
-
+        
 
         report_file.write(f"Last Login: \n")            
-        # need to check last login
+        # need to check last login 
+        report_file.write(get_last_login(user))
 
         report_file.write(f"Permissions: \n")
         # need to check if the user is sudoer or not
