@@ -1,4 +1,9 @@
 #!usr/bin/env/python3
+
+# Author: Jaekyun Kim
+# StudentID: jkim681
+# Last revised: 2024-11-24
+
 import os
 import pwd
 
