@@ -69,7 +69,7 @@ if __name__ == "__main__":
 
     if os.geteuid() != 0:
         # This will check if the user is running the script as root
-        print("Insufficent Permission: This script needs to be run as root")
+        print("Insufficent Permission: This script needs to be run as sudo")
         usage()
     # Checks if the user has provided correct number of arguments (This script does not take in any command line input)
     if len(sys.argv) == 1: 
