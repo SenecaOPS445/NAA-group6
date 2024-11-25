@@ -43,9 +43,20 @@ def is_sudoer(user):
     # Check if the user is in the sudoers file
     sudoers_file.close()
     # may need to check user group as well if the user is in sudo group
+    # may need to add which folder the user has sudo access to
     if user in sudoers_data:
         return "User is a sudoer."
     return "User is not a sudoer."
+
+def get_user_disk_usage(user):
+    """
+    This function will return the disk usage of the user.
+    """
+    # This will run the command and return the output as file object
+    disk_usage_command = os.popen(f"quota -u {user}")
+    # Read the file
+    disk_usage_data = disk_usage_command.read()
+    return disk_usage_data
 
 def user_report():
     """
@@ -70,6 +81,7 @@ def user_report():
         report_file.write(f"User: {user}\n")
         # need to check disk usage
         report_file.write(f"Disk Usage: \n")
+        report_file.write(get_user_disk_usage(user))
         # need to check last login 
         report_file.write(f"Last Login: \n")            
         report_file.write(get_last_login(user))
