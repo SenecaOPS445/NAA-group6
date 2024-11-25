@@ -61,13 +61,9 @@ def user_report():
         report_file.write(f"Last Login: \n")            
         # need to check last login 
         report_file.write(get_last_login(user))
-
+        
         report_file.write(f"Permissions: \n")
         # need to check if the user is sudoer or not
-
-        report_file.write(f"Connection Method: \n")
-        # need to check how the user connected to the system
-
         report_file.write("\n")
     
     report_file.close()
