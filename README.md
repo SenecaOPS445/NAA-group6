@@ -17,7 +17,8 @@ Some of the features include:
 ### Overview
 
 When running the command\
-`python3 ./assignment2.py`
+(NOTE. This script **needs to run as sudo** to work properly)
+`sudo python3 ./assignment2.py`
 
 This will prompt the menu with all the options. These options may look like the following:\
 (NOTE. This is **not** final!) 
