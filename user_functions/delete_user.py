@@ -1,7 +1,17 @@
-#!usr/bin/env/python3
+#!/usr/bin/env python3
+# Author ID: Mohammadullah
+
+import os
 
 def delete_user():
-    """
-    This function will delete a user to the system.
-    """
-    pass
+    """This function deletes user from the system.
+     It will ask the user the username that they intended to delete then uses os.system() to run the commands. """
+    
+    # Step 1: Ask the user which username they wish to delete
+    username = input("Enter the username you wish to delete: ")
+
+    # Step 2: Check if the user has actually put in a valid username
+    if not username: # If the user hits the enter key without entering anything.
+        print("Error: No username provided.")
+        return
+    
