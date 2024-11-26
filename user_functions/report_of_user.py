@@ -33,7 +33,7 @@ def get_last_login(user):
     This function will return the detailed information about last login of given user.
     """
     # The os.popen will run the command and return the output as file object
-    # Do I use last or lastlog cmd? need to some research here
+    # We want to get the history of the login of the provided user
     last_login_command = os.popen(f"last {user}")
     # Since it is file object we need to read the file
     last_login_data = last_login_command.read()
@@ -60,6 +60,8 @@ def get_user_disk_usage(user_info):
     This function will return the disk usage of the user.
     """
     # This will run the command and return the output as file object
+    # we want to get the disk usage by looking at the home directory of the user
+    # This is provided by the user_info[1]
     try:
         disk_usage_command = os.popen(f"du -sh {user_info[1]}")
     except:
@@ -97,7 +99,7 @@ def user_report():
         report_file.write(f"Disk Usage: \n")
         report_file.write(get_user_disk_usage(user))
         # need to check last login 
-        report_file.write(f"Last Login: \n")            
+        report_file.write(f"Login History: \n")            
         report_file.write(get_last_login(user[0]))
         report_file.write("\n")
     
