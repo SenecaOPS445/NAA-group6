@@ -2,7 +2,7 @@
 
 # Author: Jaekyun Kim
 # StudentID: jkim681
-# Last revised: 2024-11-24
+# Last revised: 2024-11-26
 
 import os
 import pwd
@@ -34,7 +34,11 @@ def get_last_login(user):
     """
     # The os.popen will run the command and return the output as file object
     # We want to get the history of the login of the provided user
-    last_login_command = os.popen(f"last {user}")
+    try: # we want to do some error catching in case the command fails
+        last_login_command = os.popen(f"last {user}")
+    except:
+        print(f"Unable to get login history for the user:{user} \n")
+        return # We do not return anything as the function does not expect any return value
     # Since it is file object we need to read the file
     last_login_data = last_login_command.read()
     # when there is time i should try to clean the data
@@ -47,7 +51,12 @@ def is_sudoer(user):
     # may need to check user group as well if the user is in sudo group
     # may need to add which folder the user has sudo access to
     # this problem is solved by running sudo -l -U command
-    user_privileges_raw = os.popen(f"sudo -l -U {user}").read()
+    try:
+        user_privileges_raw = os.popen(f"sudo -l -U {user}").read()
+    except:
+        # we want to catch possible unexpected error that might occur when running the linix command
+        print(f"Unexpected Error: Unable to get user privileges for the user:{user} \n")
+        return
     # In some cases, the above command outputed more information then required. 
     # This code will filter out exccessive information by starting from the word "User"
     start_index = user_privileges_raw.find("User")
@@ -64,9 +73,9 @@ def get_user_disk_usage(user_info):
     # This is provided by the user_info[1]
     try:
         disk_usage_command = os.popen(f"du -sh {user_info[1]}")
-    except:
-        return f"Unable to get disk usage for the user:{user_info[0]} This could be because user is system user \n"
-    
+    except: 
+        print(f"Unable to get disk usage for the user:{user_info[0]} This could be because user is system user \n")
+        return # We do not return anything as the function does not expect any return value
     # Read the file
     disk_usage_data = disk_usage_command.read()
     return disk_usage_data
@@ -103,6 +112,7 @@ def user_report():
         report_file.write(get_last_login(user[0]))
         report_file.write("\n")
     
-    report_file.close()
+    report_file.close() # make sure we close the file after writing to it
+    # we want to notify if the report has been created successfully or not
     print("User report has been created successfully. AT {report_location}/user_report.txt \n")
-    return
+    return # We do not return anything as the function does not expect any return value in the main code
