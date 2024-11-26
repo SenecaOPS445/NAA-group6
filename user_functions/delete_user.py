@@ -24,23 +24,23 @@ def delete_user():
     if not username: # If the user hits the enter key without entering anything.
         print("Error: No username provided.")
         return
-    
+    if check_user_exists(username):
     # Step 3: Confirm that they actually want to delete the user
-    while True: # Starts a loop until the user inputs a valid username
-        confirmation = input(f"Are you sure you want to delete the user '{username}'? (yes/no): ").strip().lower()
-        if confirmation == "yes": # User assures he wants to delete the user
-            break # The loop stops and proceeds with deletion
-        elif confirmation == "no": # User cancels deletion
-            print("User deletion canceled.")
-            return
-        else: # Invalid input
-            print("invalid Input. Please enter 'yes' or 'no'.")
+        while True: # Starts a loop until the user inputs a valid username
+            confirmation = input(f"Are you sure you want to delete the user '{username}'? (yes/no): ").strip().lower()
+            if confirmation == "yes": # User assures he wants to delete the user
+                break # The loop stops and proceeds with deletion
+            elif confirmation == "no": # User cancels deletion
+                print("User deletion canceled.")
+                return
+            else: # Invalid input
+                print("invalid Input. Please enter 'yes' or 'no'.")
     
      # Step 4: OS command for deleting the user
     # userdel -r removes the user and user's home directory
     # the returned value of os.system is the key to decide whether the command in the string parameter is successfully executed or not. 
     # Try block truies to delete the user but gives error if the command executes unsuccsessfully
-    if check_user_exists(username):
+
         try:
 
             result = os.system(f"sudo userdel -r {username}")
