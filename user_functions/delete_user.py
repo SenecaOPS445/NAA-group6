@@ -39,18 +39,16 @@ def delete_user():
      # Step 4: OS command for deleting the user
     # userdel -r removes the user and user's home directory
     # the returned value of os.system is the key to decide whether the command in the string parameter is successfully executed or not. 
+    # Try block truies to delete the user but gives error if the command executes unsuccsessfully
     if check_user_exists(username):
+        try:
 
-        result = os.system(f"sudo userdel -r {username}")
+            result = os.system(f"sudo userdel -r {username}")
+        except:
+            print(f"Error: could not delete the user '{username}'.")
+            return 
         print(f"User '{username}' successfully deleted.")
-
-
-    # Step 5: Run the command to see what it returns
-    if result == 0: # If the return value is 0 then it is showing that the task is successfully executed.
-        
-    else: # If the return value is not equal to zero, then the command failed
-        # Reasons for failure may include:
-        # - User does not exist
-        # - Insufficient permissions
-        # - Syntex issues with the command
-        print(f"Error: could not delete the user '{username}'. Please check the username or your permissions.")
+        return
+    else:
+        print(f"Username: {username} does not exist, please check again.")
+        return 
