@@ -15,3 +15,14 @@ def delete_user():
         print("Error: No username provided.")
         return
     
+    # Step 3: Confirm that they actually want to delete the user
+    while True: # Starts a loop until the user inputs a valid username
+        confirmation = input(f"Are you sure you want to delete the user '{username}'? (yes/no): ").strip().lower()
+        if confirmation == "yes": # User assures he wants to delete the user
+            break # The loop stops and proceeds with deletion
+        elif confirmation == "no": # User cancels deletion
+            print("User deletion canceled.")
+            return
+        else: # Invalid input
+            print("invalid Input. Please enter 'yes' or 'no'.")
+    
