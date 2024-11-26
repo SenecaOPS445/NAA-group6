@@ -36,7 +36,7 @@ def delete_user():
             else: # Invalid input
                 print("invalid Input. Please enter 'yes' or 'no'.")
     
-     # Step 4: OS command for deleting the user
+    # Step 4: OS command for deleting the user
     # userdel -r removes the user and user's home directory
     # the returned value of os.system is the key to decide whether the command in the string parameter is successfully executed or not. 
     # Try block truies to delete the user but gives error if the command executes unsuccsessfully
