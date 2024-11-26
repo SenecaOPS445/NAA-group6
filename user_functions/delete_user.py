@@ -26,3 +26,18 @@ def delete_user():
         else: # Invalid input
             print("invalid Input. Please enter 'yes' or 'no'.")
     
+     # Step 4: OS command for deleting the user
+    # userdel -r removes the user and user's home directory
+    # the returned value of os.system is the key to decide whether the command in the string parameter is successfully executed or not. 
+    result = os.system(f"sudo userdel -r {username}")
+
+
+    # Step 5: Run the command to see what it returns
+    if result == 0: # If the return value is 0 then it is showing that the task is successfully executed.
+        print(f"User '{username}' successfully deleted.")
+    else: # If the return value is not equal to zero, then the command failed
+        # Reasons for failure may include:
+        # - User does not exist
+        # - Insufficient permissions
+        # - Syntex issues with the command
+        print(f"Error: could not delete the user '{username}'. Please check the username or your permissions.")
