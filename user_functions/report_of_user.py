@@ -21,9 +21,9 @@ def get_regular_users():
         # Since getpwall fetchese all users, including system users. we need to filter out these.
         # After doing some research, modern linux distros generally uses uid greater th1an 1000 for regular users
         # root pw_uid is 0 so we should capture this as well
-	    # in certain distro nobody user has uid greater then 1000
+	    # in certain distro nobody system user has uid greater then 1000 and we do not want to include it.
         if (user.pw_uid >= 1000 or user.pw_uid == 0) and user.pw_name != "nobody":
-            # we only want the username (this may change)
+            # we only want the username and the user home directory
             regular_users.append((user.pw_name,user.pw_dir))
     
     return regular_users
@@ -47,8 +47,11 @@ def is_sudoer(user):
     # may need to check user group as well if the user is in sudo group
     # may need to add which folder the user has sudo access to
     # this problem is solved by running sudo -l -U command
-    user_privileges = os.popen(f"sudo -l -U {user}").read()
-
+    user_privileges_raw = os.popen(f"sudo -l -U {user}").read()
+    # In some cases, the above command outputed more information then required. 
+    # This code will filter out exccessive information by starting from the word "User"
+    start_index = user_privileges_raw.find("User")
+    user_privileges = user_privileges_raw[start_index:]
     # if have time should try to clean the data
     return user_privileges
 
@@ -60,7 +63,7 @@ def get_user_disk_usage(user_info):
     try:
         disk_usage_command = os.popen(f"du -sh {user_info[1]}")
     except:
-        return f"Unable to get disk usage for the user:{user_info[0]} This could be because user is system user"
+        return f"Unable to get disk usage for the user:{user_info[0]} This could be because user is system user \n"
     
     # Read the file
     disk_usage_data = disk_usage_command.read()
@@ -75,7 +78,7 @@ def user_report():
 
     # We need to check if the filepath is valid
     if not os.path.exists(report_location):
-        print("The location you provided does not exist.")
+        print("The location you have provided does not exist. \n")
         return
     # We need to create and write to text file in the file loaction
     report_file = open(report_location + "/user_report.txt", "w")
