@@ -33,6 +33,7 @@ def main():
     print("3. update user ")
     print("4. create user report")
     print("5. exit")
+    
     try:
         # This will try to convert the user input to an integer
         # Incase the user enters invalid input
