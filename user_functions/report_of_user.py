@@ -19,7 +19,7 @@ def get_regular_users():
     regular_users = []
     for user in all_users:
         # Since getpwall fetchese all users, including system users. we need to filter out these.
-        # After doing some research, modern linux distros generally uses uid greater th1an 1000 for regular users
+        # After doing some research, modern linux distros generally uses uid greater than 1000 for regular users
         # root pw_uid is 0 so we should capture this as well
 	    # in certain distro nobody system user has uid greater then 1000 and we do not want to include it.
         if (user.pw_uid >= 1000 or user.pw_uid == 0) and user.pw_name != "nobody":
@@ -31,7 +31,7 @@ def get_regular_users():
 
 def get_last_login(user):
     """
-    This function will return the detailed information about last login of given user.
+    This function will return the detailed information about login history of given user.
     """
     # The os.popen will run the command and return the output as file object
     # We want to get the history of the login of the provided user
@@ -49,7 +49,8 @@ def get_last_login(user):
 
 def is_sudoer(user):
     """
-    This function will return True if the user is a sudoer, False otherwise.
+    This function will return a string indicating if the user has sudo access. 
+    It will also check what commands the user can run a sudo.
     """
     # may need to check user group as well if the user is in sudo group
     # may need to add which folder the user has sudo access to
@@ -63,7 +64,7 @@ def is_sudoer(user):
         return f"Unexpected Error: Unable to get user privileges for the user:{user} \n"
     # In some cases, the above command outputed more information then required. 
     # This code will filter out exccessive information by starting from the word "User"
-    start_index = user_privileges_raw.find("User")
+    start_index = user_privileges_raw.find("User") # finds the index that of the word "User"
     user_privileges = user_privileges_raw[start_index:]
     # if have time should try to clean the data
     return user_privileges
@@ -105,7 +106,9 @@ def get_recent(user):
 
 def user_report():
     """
-    This function will create a user report as text file in the provided location for all users including the user's name, disk usage, when logged in and permissions. 
+    This function will create a user report as text file in the provided location 
+    for all users including the user's name, disk usage, when logged in and permissions.
+    This function does not return anything.
     """
     # Prompt the user for the location to save the report
     report_location = input("Please enter the location to save the user report: ")
@@ -127,12 +130,15 @@ def user_report():
         # need to check if the user is sudoer or not
         report_file.write(f"Permissions: \n")
         report_file.write(is_sudoer(user[0]))
+        report_file.write("\n")
         # need to check disk usage
         report_file.write(f"Disk Usage: \n")
         report_file.write(get_user_disk_usage(user))
+        report_file.write("\n")
         # need to check history of login 
-        report_file.write(f"Login History: \n")            
+        report_file.write(f"Login History: \n")    
         report_file.write(get_last_login(user[0]))
+        report_file.write("\n")
         # Addition feature: looking at recent user activity  + cpu usage
         report_file.write(f"Recent User Activity: \n")
         report_file.write(get_recent(user[0]))
