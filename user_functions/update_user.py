@@ -71,7 +71,7 @@ def updatepasswd():                  # Function to change/update password for a 
         print(f"user: {user} does not exist.")
 
 def removesudoer():                  # Function to remove sudo privilages for a specified user
-    user = input("Enter the user to remove sudo access").strip()
+    user = input("Enter the user to remove sudo access: ").strip()
     if not user:
         print("Error: Please provide a user.")
         return
