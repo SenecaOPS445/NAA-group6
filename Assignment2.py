@@ -1,5 +1,6 @@
 #!usr/bin/env/python3
 import sys
+import os
 
 # Importing the functions from the user_functions folder
 from user_functions.add_user import add_user
@@ -15,7 +16,7 @@ def usage():
     """
     # Prints some user friendly information about how to run the script
     # To guide the user on how to run the script
-    print("Usage: python3 Assignment2.py")
+    print("Usage: sudo python3 Assignment2.py")
     print("This script does not take in any command line arguments.")
     # Exits the script with a status code of 1 to indicate code did not run properly
     sys.exit(1)
@@ -30,7 +31,7 @@ def main():
     print("1. add user")
     print("2. delete user")
     print("3. update user permissions")
-    print("4. Create user report")
+    print("4. create user report")
     print("5. exit")
     try:
         # This will try to convert the user input to an integer
@@ -65,7 +66,14 @@ def main():
 
 if __name__ == "__main__":
     loop_init = True # Setting this value will alow us to run the intitial loop
-
+    # Since the script runs many terminal commands that requires prevlieged accesses
+    # We need to make sure the user is running the script as sudo
+    # To ensure that script runs as intended. The os.geteuid function will allow us
+    # to check if the script is running with previleged access
+    if os.geteuid() != 0:
+        # This will check if the user is running the script as root (the 0 represents root)
+        print("Insufficent Permission: This script needs to be run as sudo")
+        usage()
     # Checks if the user has provided correct number of arguments (This script does not take in any command line input)
     if len(sys.argv) == 1: 
         # This will run the main function in a loop until the user exits the program

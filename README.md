@@ -17,15 +17,16 @@ Some of the features include:
 ### Overview
 
 When running the command\
-`python3 ./assignment2.py`
+(NOTE. This script **needs to run as sudo** to work properly)
+`sudo python3 ./assignment2.py`
 
 This will prompt the menu with all the options. These options may look like the following:\
 (NOTE. This is **not** final!) 
 
-`` 1. add user`` \
+``1. add user`` \
 ``2. delete user``\
-``3. change permission of user``\
-``4. create report of users``\
+``3. update user permissions``\
+``4. create user report``\
 ``5. exit``\
 ``please enter the action you want to execute (1-5):``
 
