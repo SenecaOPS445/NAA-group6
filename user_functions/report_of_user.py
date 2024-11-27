@@ -24,6 +24,7 @@ def get_regular_users():
 	    # in certain distro nobody system user has uid greater then 1000 and we do not want to include it.
         if (user.pw_uid >= 1000 or user.pw_uid == 0) and user.pw_name != "nobody":
             # we only want the username and the user home directory
+            # we also do not have to worry about empty list being returned as there will always be a root user
             regular_users.append((user.pw_name,user.pw_dir))
     
     return regular_users
@@ -85,6 +86,23 @@ def get_user_disk_usage(user_info):
     disk_usage_data = disk_usage_command.read()
     return disk_usage_data
 
+def get_recent(user):
+    """
+    This function will return the recent activity of the user.
+    """
+    # This will run the command and return the output as file object
+    # we want to get the recent activity of the user
+    try:
+        recent_command = os.popen(f"w {user}")
+    except:
+        # we want to notify the user right away and create the report with the error
+        # in case other command works as intended
+        print(f"Unable to get recent activity for the user:{user} \n")
+        return f"Unable to get recent activity for the user:{user} \n"
+    # Read the file
+    recent_data = recent_command.read()
+    return recent_data
+
 def user_report():
     """
     This function will create a user report as text file in the provided location for all users including the user's name, disk usage, when logged in and permissions. 
@@ -112,12 +130,15 @@ def user_report():
         # need to check disk usage
         report_file.write(f"Disk Usage: \n")
         report_file.write(get_user_disk_usage(user))
-        # need to check last login 
+        # need to check history of login 
         report_file.write(f"Login History: \n")            
         report_file.write(get_last_login(user[0]))
+        # Addition feature: looking at recent user activity  + cpu usage
+        report_file.write(f"Recent User Activity: \n")
+        report_file.write(get_recent(user[0]))
         report_file.write("\n")
     
     report_file.close() # make sure we close the file after writing to it
     # we want to notify if the report has been created successfully or not
-    print("User report has been created successfully. AT {report_location}/user_report.txt \n")
+    print(f"User report has been created successfully. AT {report_location}/user_report.txt \n")
     return # We do not return anything as the function does not expect any return value in the main code
