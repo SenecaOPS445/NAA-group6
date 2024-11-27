@@ -44,46 +44,57 @@ def makesudoer():                    # Function to grant Sudo access to a specif
         print(f"{user} does not exist")
         # prints the helfful message if userexist() function could not find the user
 
-def updatepasswd():
+def updatepasswd():                  # Function to change/update password for a user
     user = input("Enter the user to change the password: ").strip()
-
+    # getting the user to make changes to .strip() is used to remove any accidental and unwanted spaces or newline characters
     if not user:
+    # input control code to check empty inputs
         print("Error: no user provided.")
+        # Prints a general message asking for an input and exits the function if no user is provided
         return
 
     if userexist(user):
+    # calls userexists(user) function if True proceeds with the inside code, if False executes the else block
         try:
             print(f"Changing password for user '{user}'.")
+            # prints a helpfull message indicating what function is being performed on which user 
             subprocess.run(["sudo", "passwd", user], check=True)
+            # another way of executing shell commands directly from the python code using subprocess.run
+            # check = True is used for error handling similar to while True. if any error is generated while executing the command 
+            # it jumps the cursor to catch/except block for handling
             print(f"Password for user '{user}' updated")
+            # if above process is success, prints a message of successfull execution and function performed.
         except subprocess.CalledProcessError:
             print(f"Error: Cannot change password for user '{user}'.")
             print(subprocess.CalledProcessError)
     else:
         print(f"user: {user} does not exist.")
 
-def removesudoer():
+def removesudoer():                  # Function to remove sudo privilages for a specified user
     user = input("Enter the user to remove sudo access").strip()
     if not user:
         print("Error: Please provide a user.")
         return
-
+    # Same code to check for empty input
     if userexist(user): 
         try:
             os.system(f"sudo deluser {user} sudo")
+            # used to execute a shell command using os.system() 
+            # sudo deluser can also be used to remove a user entirely but here the sudo mentioned at the end of the command signifies the group from which the user needs to be deleted.
             print(f"{user} has been removed from the sudoers.")
         except Exception:
+            # Error Handling
             print(f"Error: Cannot remove '{user}' from the sudoers.")
             print(Exception)
     else:
         print(f"{user} does not exist")
 
     
-def update_user():
+def update_user():                  # Main Function
     """
-    This function will update user permissions,(if possible username, and password.)
+    This function will update user permissions and password
     """
-    print("Please choose an option:")
+    print("Please choose an option:")           # Simple way of printing a menu of the functionalities available
     print("1. Change a user password")
     print("2. Make a user sudoer")
     print("3. Remove sudo access from a user ")
@@ -91,18 +102,25 @@ def update_user():
     
     try:
         opt = int(input("Enter your option: ").strip())
+        # Storing the choice into a variable for further processing
     except ValueError:
+        # Error handing for an invalid input
         print("Invalid option")
         return
 
     if opt == 1:
         updatepasswd()
+        # calls the function updatepasswd() if input is 1
     elif opt == 2:
         makesudoer()
+        # calls the function makesudoer if input is 2
     elif opt == 3:
         removesudoer()
+        # calls the function removesudoer if input is 3
     elif opt == 4:
         print("----------Exiting----------.")
+        # exits the function if input printing a message if input is 4
         return
     else:
         print("Invalid option")
+        # prints a message if input is out of scope
