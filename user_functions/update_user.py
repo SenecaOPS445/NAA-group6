@@ -62,6 +62,7 @@ def removesudoer():
             print(Exception)
     else:
         print(f"{user} does not exist")
+        
     
 def update_user():
     """
