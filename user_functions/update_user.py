@@ -48,15 +48,29 @@ def updatepasswd():
         print(f"user: {user} does not exist.")
 
 def removesudoer():
-    ''''''
+    user = input("Enter the user to remove sudo access").strip()
+    if not user:
+        print("Error: Please provide a user.")
+        return
+
+    if userexist(user): 
+        try:
+            os.system(f"sudo deluser {user} sudo")
+            print(f"{user} has been removed from the sudoers.")
+        except Exception:
+            print(f"Error: Cannot remove '{user}' from the sudoers.")
+            print(Exception)
+    else:
+        print(f"{user} does not exist")
+    
 def update_user():
     """
     This function will update user permissions,(if possible username, and password.)
     """
     print("Please choose an option:")
     print("1. Change a user password")
-    print("2. Update username for an account")
-    print("3. Make a user sudoer")
+    print("2. Make a user sudoer")
+    print("3. Remove sudo access from a user ")
     print("4. exit")
     
     try:
@@ -68,9 +82,9 @@ def update_user():
     if opt == 1:
         updatepasswd()
     elif opt == 2:
-        removesudoer()
-    elif opt == 3:
         makesudoer()
+    elif opt == 3:
+        removesudoer()
     elif opt == 4:
         print("----------Exiting----------.")
         return
