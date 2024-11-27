@@ -18,5 +18,9 @@ def add_user():
         print(f"Error: User '{username}' already exists.")
         return
 
-
+# Add the new user
+    if subprocess.run(["sudo", "useradd", "-m", username]).returncode == 0:
+        print(f"User '{username}' has been successfully added.")
+    else:
+        print("Error: Failed to add user. Check your permissions or input.")
 
