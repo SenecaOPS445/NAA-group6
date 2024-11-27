@@ -13,7 +13,7 @@ def userexist(username):
             return True
     return False
 
-def changepermission():
+def makesudoer():
     user = input("Enter the user to escalate permissions: ").strip()
     if not user:
         print("Error: Please provide a user.")
@@ -47,28 +47,8 @@ def updatepasswd():
     else:
         print(f"user: {user} does not exist.")
 
-def updateusername():
-    oldusrname = input("Enter the current username: ").strip()
-
-    if not oldusrname:
-        print("Error: no username provided.")
-        return
-
-    if userexist(oldusrname):
-        newusrname = input("Enter the new username: ").strip()
-        if not newusrname:
-            print("Error: No new username provided.")
-            return
-
-        try:
-            os.system(f"sudo usermod -l {newusrname} {oldusrname}")
-            print(f"Username updated from '{oldusrname}' to '{newusrname}'.")
-        except Exception:
-            print(f"Error: Could not update username.")
-            print(Exception)
-    else:
-        print(f"Username: {oldusrname} does not exist.")
-
+def removesudoer():
+    ''''''
 def update_user():
     """
     This function will update user permissions,(if possible username, and password.)
@@ -88,9 +68,9 @@ def update_user():
     if opt == 1:
         updatepasswd()
     elif opt == 2:
-        updateusername()
+        removesudoer()
     elif opt == 3:
-        changepermission()
+        makesudoer()
     elif opt == 4:
         print("----------Exiting----------.")
         return
