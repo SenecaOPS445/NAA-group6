@@ -56,8 +56,9 @@ There will be error handling in the program and the program will continue to loo
         - list of all users
         - disk usage 
         - permissions the user has 
-        - how/when user accessesed system (SSH, RDP, etc.) 
+        - how/when user accessesed system
     - And possibly more
+
 5. What aspects of development do you think will present the most challenge?
 
     We expect that file manipulation will be most difficult, as we need to edit the sudoers file which can break easily. Furthermore, file manipulation is a must when creating the reports. Also, understanding and using the standard libraries, and finding ways to get and format the outputs into one report file may appose some challenge.
