@@ -28,7 +28,7 @@ def add_user():
     # os.popen() runs the command
     # we run the try block to catch any errors
     try:
-        os.popen(f"sudo useradd -m {username}")
+        os.system(f"sudo useradd -m {username}")
     except:
         print("Error: Failed to add user. Check your permission or input")
         return
