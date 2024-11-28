@@ -30,9 +30,10 @@ def main():
     print("Please choose between the following options")
     print("1. add user")
     print("2. delete user")
-    print("3. update user permissions")
+    print("3. update user ")
     print("4. create user report")
     print("5. exit")
+    
     try:
         # This will try to convert the user input to an integer
         # Incase the user enters invalid input
