@@ -1,26 +1,35 @@
 #!usr/bin/env/python3
 
-import subprocess
+import os
 
 def add_user():
     """
     This function will add a user to the system.
     """
 
-# Get the username from the user
-    username = input("Enter the username for the new user: ").strip()
+    # Get the username from the user
+    username = input("Eneter the username for the new user: ").strip()
     if not username:
         print("Error: Username cannot be empty.")
         return
-
-# Check if the user already exists
-    if subprocess.run(["id", username], stdout=subprocess.DEVNULL).returncode == 0:
+    
+    # Check if the user already exists
+    # users id command to check if the username already exists
+    # we use os.popen() to run the command and read the output
+    # we use 2>/dev/null to redirect the error output to /dev/null
+    # so that when it errors, we do not save the message to the variable to get empty string
+    user_check = os.popen(f"id -u {username} 2>/dev/null").read().strip()
+    if user_check:
         print(f"Error: User '{username}' already exists.")
         return
 
-# Add the new user
-    if subprocess.run(["sudo", "useradd", "-m", username]).returncode == 0:
-        print(f"User '{username}' has been successfully added.")
-    else:
-        print("Error: Failed to add user. Check your permissions or input.")
-
+ # Run the 'useradd' command to add the user, using sudo for admin privileges
+    # "-m" makes sure a home directotry is created for the new user
+    # os.popen() runs the command
+    # we run the try block to catch any errors
+    try:
+        os.popen(f"sudo useradd -m {username}")
+    except:
+        print("Error: Failed to add user. Check your permission or input")
+        return
+    return
