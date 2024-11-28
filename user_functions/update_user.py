@@ -3,7 +3,6 @@
 # SID: 152096210
 
 import os
-import subprocess
 import pwd
 
 def userexist(username):             # Function to Check if the user provided exists
@@ -58,15 +57,15 @@ def updatepasswd():                  # Function to change/update password for a 
         try:
             print(f"Changing password for user '{user}'.")
             # prints a helpfull message indicating what function is being performed on which user 
-            subprocess.run(["sudo", "passwd", user], check=True)
+            os.system(f"sudo passwd {user}")
             # another way of executing shell commands directly from the python code using subprocess.run
             # check = True is used for error handling similar to while True. if any error is generated while executing the command 
             # it jumps the cursor to catch/except block for handling
             print(f"Password for user '{user}' updated")
             # if above process is success, prints a message of successfull execution and function performed.
-        except subprocess.CalledProcessError:
+        except Exception:
             print(f"Error: Cannot change password for user '{user}'.")
-            print(subprocess.CalledProcessError)
+            print(Exception)
     else:
         print(f"user: {user} does not exist.")
 
@@ -124,3 +123,4 @@ def update_user():                  # Main Function
     else:
         print("Invalid option")
         # prints a message if input is out of scope
+
