@@ -8,7 +8,7 @@ def add_user():
     """
 
     # Get the username from the user
-    username = input("Eneter the username for the new user: ").strip() 
+    username = input("Enter the username for the new user: ").strip() 
     # .strip gets rid of trailing empty spaces to reduce confusion when interjecting
     if not username: # this is a shortcut to username  ==, the statement evaluates the true when username is empty string
         print("Error: Username cannot be empty.")
@@ -22,9 +22,9 @@ def add_user():
     # so that when it errors, we do not save the message to the variable to get empty string
     # -u is a flag to indicate username
     # .read reads the data from the object that os.popen returns
-    user_check = os.popen(f"id -u {username} 2>/dev/null").read().strip()
+    user_check = os.popen(f"id -u {username} 2>/dev/null").read().strip() # this will return the user id if the user exists
     if user_check: # checks if it is empty string or not
-        print(f"Error: User '{username}' already exists.") # if it is empty string, that means the user already exists
+        print(f"Error: User '{username}' already exists.") # if it is not an empty string, that means the user already exists
         return
 
  # Run the 'useradd' command to add the user, using sudo for admin privileges
