@@ -1,0 +1,25 @@
+
+--------------------------------------------------
+group6
+--------------------------------------------------
+Python Version: 3.12.7 (main, Oct  1 2024, 11:15:50) [GCC 14.2.1 20240910]
+Ran on 2024-12-02 10:54:16.840274
+Git commit used: commit f7c8d713b1246a70d5f6e2c01d9dd3050b092e6a
+Merge: f059445 32e9f21
+Author: Jaekyun (Jake) Kim <90648392+rlaworbs98@users.noreply.github.com>
+Date:   Thu Nov 28 10:18:59 2024 -0500
+
+    Merge pull request #9 from SenecaOPS445/test
+    
+    FINAL CHANGE - Removed Redundancy and fixed typo
+
+
+--------------------------------------------------
+Relevant, useful, shows ambition           3.0/  3
+Comments and Documentation                 5.0/  5
+Adequate commits with good messages        5.0/  5
+No redundant code, variable names          2.0/  2
+
+--------------------------------------------------
+Total: 15.0/15
+FEEDBACK:
